@@ -13,6 +13,7 @@ app.use(
   "/graphql",
   createYoga({
     schema: schema,
+    graphiql: true,
   })
 );
 
