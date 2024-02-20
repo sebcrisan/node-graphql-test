@@ -1,6 +1,6 @@
 const express = require("express");
 const { buildSchema } = require("graphql");
-const { graphqlHTTP } = require("express-graphql");
+const { createYoga } = require("graphql-yoga");
 const schema = buildSchema(
   `type Query{
         description: String
@@ -9,15 +9,10 @@ const schema = buildSchema(
 );
 const app = express();
 
-const root = {
-  description: "Red Shoe",
-  price: 42.12,
-};
 app.use(
   "/graphql",
-  graphqlHTTP({
+  createYoga({
     schema: schema,
-    rootValue: root,
   })
 );
 
