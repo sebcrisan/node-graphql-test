@@ -3,7 +3,7 @@ const express = require("express");
 const { createYoga } = require("graphql-yoga");
 
 const { makeExecutableSchema } = require("@graphql-tools/schema");
-const { loadFilesSync } = require("graphql-tools/load-files");
+const { loadFilesSync } = require("@graphql-tools/load-files");
 
 const typesArray = loadFilesSync("**/*", {
   extensions: ["graphql"],
