@@ -2,10 +2,34 @@ const express = require("express");
 const { buildSchema } = require("graphql");
 const { createYoga } = require("graphql-yoga");
 const schema = buildSchema(
-  `type Query{
-        description: String
-        price: Float
-    }`
+  `type Query {
+        products: [Product]
+        orders: [Order]
+    }
+    
+    type Product {
+        id: ID!
+        description: String!
+        price: Float!
+        reviews: [Review]
+    }
+
+    type Review {
+        rating: Int!
+        comment: String 
+    }
+    
+    type Order {
+      date: String!
+      subtotal: Float!
+      items: [OrderItem]
+    }
+
+    type OrderItem{
+      product: Product!
+      quantity: Int!
+    }
+    `
 );
 const app = express();
 
