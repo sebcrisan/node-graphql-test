@@ -1,36 +1,22 @@
 const express = require("express");
-const { buildSchema } = require("graphql");
+
 const { createYoga } = require("graphql-yoga");
-const schema = buildSchema(
-  `type Query {
-        products: [Product]
-        orders: [Order]
-    }
-    
-    type Product {
-        id: ID!
-        description: String!
-        price: Float!
-        reviews: [Review]
-    }
 
-    type Review {
-        rating: Int!
-        comment: String 
-    }
-    
-    type Order {
-      date: String!
-      subtotal: Float!
-      items: [OrderItem]
-    }
+const { makeExecutableSchema } = require("@graphql-tools/schema");
+const { loadFilesSync } = require("graphql-tools/load-files");
 
-    type OrderItem{
-      product: Product!
-      quantity: Int!
-    }
-    `
-);
+const typesArray = loadFilesSync("**/*", {
+  extensions: ["graphql"],
+});
+
+const resolversArray = loadFilesSync("**/*", {
+  extensions: ["resolvers.js"],
+});
+
+const schema = makeExecutableSchema({
+  typeDefs: [typesArray],
+});
+
 const app = express();
 
 app.use(
